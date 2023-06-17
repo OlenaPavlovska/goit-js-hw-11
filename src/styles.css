@@ -1,0 +1,80 @@
+h1,
+h2,
+h3,
+body,
+p {
+    margin: 0;
+}
+.hidden{
+    display:none;
+}
+img {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    object-fit: contain;
+    width: 428px;
+}
+
+input {
+    width: 500px;
+    padding: 12px 12px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 1px solid transparent;
+}
+
+.style {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(155, 30, 113);
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+button {
+    font-weight: 300;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 16px 32px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    margin-left: 20px;
+    width: 100px;
+    padding: 12px 20px;
+    background-color: rgb(255, 255, 255);
+}
+
+ .photo-card {
+    
+            display: flex;
+            flex-direction: row;
+            gap: 25px;
+            
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            padding-bottom:20px ;
+            margin: 0;
+            list-style: none;
+        }
+
+   .info{
+    font-weight: 500;
+        font-size: 16px;
+        line-height: 1.5;
+        letter-spacing: 0.02px;
+   }
+   .load-more{
+
+font-weight: 300;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 16px 32px;
+    border-radius: 4px;
+    border: 1px solid rgb(155, 30, 113);
+    margin-left: 20px;
+    width: 100px;
+    padding: 12px 20px;
+    background-color: rgb(255, 255, 255);
+   }

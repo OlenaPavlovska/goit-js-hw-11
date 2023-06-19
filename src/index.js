@@ -28,13 +28,17 @@ function onSubmit(e) {
   clearMarkup();
   apiService.resetPage();
   if (apiService.searchQuery === '') {
-    Notify.warning('Please, fill in the search field');
+    Notiflix.Notify.warning('Please, fill in the search field');
     return;
   }
 
   fetchPictures().finally(() => {
     refs.form.reset();
-    Notiflix.Notify.success(`Hooray! We found ${apiService.totalHits} images.`);
+    if (totalHits != undefined) {
+      Notiflix.Notify.success(
+        `Hooray! We found ${apiService.totalHits} images.`
+      );
+    }
   });
 }
 
@@ -42,7 +46,11 @@ async function createPicturesMarkup() {
   try {
     hideButton();
     const { hits, totalHits } = await apiService.getPictures();
-    if (totalHits === 0) throw new Error('Not found');
+    if (totalHits === 0) {
+      Notiflix.Notify.info(
+        `"Sorry, there are no images matching your search query. Please try again."`
+      );
+    }
 
     apiService.totalHits = totalHits;
 
@@ -93,11 +101,12 @@ async function fetchPictures() {
     if (markup === undefined) throw new Error('');
     showMarkup(markup);
     const maxPage = Math.ceil(apiService.totalHits / apiService.per_page);
-    if (apiService.page > maxPage) {
+    if (apiService.page > maxPage && maxPage != 0) {
       hideButton();
       Notiflix.Notify.warning(
         "We're sorry, but you've reached the end of search results."
       );
+      hideButton();
     } else {
       showButton();
     }

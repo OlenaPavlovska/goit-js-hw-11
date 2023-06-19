@@ -27,6 +27,11 @@ function onSubmit(e) {
   apiService.setSearchQuery(searchQuery);
   clearMarkup();
   apiService.resetPage();
+  if (apiService.searchQuery === '') {
+    Notify.warning('Please, fill in the search field');
+    return;
+  }
+
   fetchPictures().finally(() => {
     refs.form.reset();
     Notiflix.Notify.success(`Hooray! We found ${apiService.totalHits} images.`);

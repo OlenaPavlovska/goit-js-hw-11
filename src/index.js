@@ -1,9 +1,9 @@
 import ApiService from './apiService.js';
 import Notiflix from 'notiflix';
-import simpleLightbox from 'simplelightbox';
+import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-const lightbox = new SimpleLightbox('.photo-card a', {
+const lightbox = new SimpleLightbox('.photo-card a ', {
   captions: true,
   captionDelay: 400,
   captionsData: 'alt',

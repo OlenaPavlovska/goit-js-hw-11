@@ -23,7 +23,7 @@ hideButton();
 
 function onSubmit(e) {
   e.preventDefault();
-  const searchQuery = refs.form.elements.searchQuery.value;
+  const searchQuery = refs.form.elements.searchQuery.value.trim();
   apiService.setSearchQuery(searchQuery);
   clearMarkup();
   apiService.resetPage();
@@ -85,10 +85,7 @@ function createPictureCard({
 async function fetchPictures() {
   try {
     const markup = await createPicturesMarkup();
-    if (markup === undefined)
-      throw new Error(
-        'Sorry, there are no images matching your search query. Please try again.'
-      );
+    if (markup === undefined) throw new Error('');
     showMarkup(markup);
     const maxPage = Math.ceil(apiService.totalHits / apiService.per_page);
     if (apiService.page > maxPage) {

@@ -92,7 +92,6 @@ function createPictureCard({
     </p>
   </div>
 </div>`;
-  lightbox.refresh();
 }
 
 async function fetchPictures() {
@@ -102,7 +101,6 @@ async function fetchPictures() {
     showMarkup(markup);
     const maxPage = Math.ceil(apiService.totalHits / apiService.per_page);
     if (apiService.page > maxPage && maxPage != 0) {
-      hideButton();
       Notiflix.Notify.warning(
         "We're sorry, but you've reached the end of search results."
       );
@@ -116,6 +114,7 @@ async function fetchPictures() {
 }
 function showMarkup(markup) {
   refs.gallery.insertAdjacentHTML('beforeend', markup);
+  lightbox.refresh();
 }
 
 function clearMarkup() {

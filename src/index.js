@@ -34,7 +34,7 @@ function onSubmit(e) {
 
   fetchPictures().finally(() => {
     refs.form.reset();
-    if (totalHits != undefined) {
+    if (apiService.totalHits != undefined) {
       Notiflix.Notify.success(
         `Hooray! We found ${apiService.totalHits} images.`
       );
@@ -44,12 +44,12 @@ function onSubmit(e) {
 
 async function createPicturesMarkup() {
   try {
-    hideButton();
     const { hits, totalHits } = await apiService.getPictures();
     if (totalHits === 0) {
-      Notiflix.Notify.info(
+      Notiflix.Notify.warning(
         `"Sorry, there are no images matching your search query. Please try again."`
       );
+      // hideButton();
     }
 
     apiService.totalHits = totalHits;
@@ -100,18 +100,21 @@ async function fetchPictures() {
     if (markup === undefined) throw new Error('');
     showMarkup(markup);
     const maxPage = Math.ceil(apiService.totalHits / apiService.per_page);
-    if (apiService.page > maxPage && maxPage != 0) {
+    if (apiService.page === maxPage) {
       Notiflix.Notify.warning(
         "We're sorry, but you've reached the end of search results."
       );
       hideButton();
-    } else {
-      showButton();
     }
+    if (apiService.totalHits < apiService.per_page) {
+      return hideButton();
+    }
+    showButton();
   } catch (err) {
     onError(err);
   }
 }
+
 function showMarkup(markup) {
   refs.gallery.insertAdjacentHTML('beforeend', markup);
   lightbox.refresh();

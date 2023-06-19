@@ -44,9 +44,10 @@ function onSubmit(e) {
 
 async function createPicturesMarkup() {
   try {
+    hideButton();
     const { hits, totalHits } = await apiService.getPictures();
     if (totalHits === 0) {
-      Notiflix.Notify.warning(
+      Notiflix.Notify.info(
         `"Sorry, there are no images matching your search query. Please try again."`
       );
       // hideButton();

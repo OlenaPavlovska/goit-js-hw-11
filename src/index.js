@@ -37,12 +37,13 @@ function onSubmit(e) {
 }
 async function createPicturesMarkup() {
   try {
+    hideButton();
     const { hits, totalHits } = await apiService.getPictures();
     if (totalHits === 0) {
       Notiflix.Notify.info(
         `"Sorry, there are no images matching your search query. Please try again."`
       );
-      hideButton();
+      // hideButton();
     }
     apiService.totalHits = totalHits;
     return hits.reduce((markup, hit) => markup + createPictureCard(hit), '');
@@ -61,7 +62,7 @@ function createPictureCard({
 }) {
   return `<div class="photo-card">
   <a href="${largeImageURL}">
-  <img class="photo-img" src=${webformatURL} alt="${tags}" loading="lazy" />
+  <img src=${webformatURL} alt="${tags}" loading="lazy" />
   </a>
   <div class="info">
     <p class="info-item">
@@ -89,16 +90,16 @@ async function fetchPictures() {
     if (markup === undefined) throw new Error('');
     showMarkup(markup);
     const maxPage = Math.ceil(apiService.totalHits / apiService.per_page);
-    if (apiService.page > maxPage) {
+    if (apiService.page === maxPage) {
       Notiflix.Notify.warning(
         "We're sorry, but you've reached the end of search results."
       );
       hideButton();
     }
-    if (apiService.totalHits <= apiService.per_page) {
+    if (apiService.totalHits < apiService.per_page) {
       return hideButton();
     }
-    return showButton();
+    showButton();
   } catch (err) {
     onError(err);
   }

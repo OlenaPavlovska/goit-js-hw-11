@@ -24,6 +24,7 @@ function onSubmit(e) {
   apiService.resetPage();
   if (apiService.searchQuery === '') {
     Notiflix.Notify.warning('Please, fill in the search field');
+    hideButton();
     return;
   }
   fetchPictures().finally(() => {
@@ -90,14 +91,16 @@ async function fetchPictures() {
     if (markup === undefined) throw new Error('');
     showMarkup(markup);
     const maxPage = Math.ceil(apiService.totalHits / apiService.per_page);
-    if (apiService.page === maxPage) {
+    const curruntPage = apiService.page - 1;
+    if (apiService.totalHits < apiService.per_page) {
+      return hideButton();
+    }
+    if (curruntPage === maxPage) {
       Notiflix.Notify.warning(
         "We're sorry, but you've reached the end of search results."
       );
       hideButton();
-    }
-    if (apiService.totalHits < apiService.per_page) {
-      return hideButton();
+      return;
     }
     showButton();
   } catch (err) {

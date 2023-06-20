@@ -44,7 +44,6 @@ async function createPicturesMarkup() {
       Notiflix.Notify.info(
         `"Sorry, there are no images matching your search query. Please try again."`
       );
-      // hideButton();
     }
     apiService.totalHits = totalHits;
     return hits.reduce((markup, hit) => markup + createPictureCard(hit), '');
